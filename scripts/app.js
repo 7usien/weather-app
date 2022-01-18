@@ -3,51 +3,24 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time = document.querySelector('.time');
 const icon = document.querySelector('.icon img');
-const updateUI = async (data) => {
-	// const cityDet = data.cityDet;
-	// const weather = data.weather;
-	const { cityDet, weather } = data;
 
-	details.innerHTML = `
-   <h5 class="my-3">${cityDet.EnglishName}</h5>
-                <div class="my-3">${weather.WeatherText}</div>
-                <div class="display-4 my-4">
-                    <span>${weather.Temperature.Metric.Value}</span>
-                    <span>°C</span>
-                </div>
+const forecast = new ForeCast();
 
-	`;
-
-	icon.setAttribute('src', `icons/${weather.WeatherIcon}.svg`);
-
-	weather.IsDayTime
-		? time.setAttribute('src', 'img/day.svg')
-		: time.setAttribute('src', 'img/night.svg');
-
-	card.classList.contains('d-none') ? card.classList.remove('d-none') : false;
-};
-
-const updateCity = async (city) => {
-	const cityDet = await getCity(city);
-	const weather = await getWeather(cityDet.Key);
-	console.log(cityDet);
-	return { cityDet, weather };
-};
 cityForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const cityId = cityForm.city.value.trim().toLowerCase();
 	// add city to local stroage
 	localStorage.setItem('city', cityId);
 	cityForm.reset();
-	updateCity(cityId).then((data) => {
-		updateUI(data);
+	forecast.updateCity(cityId).then((data) => {
+		forecast.updateUI(data);
 	});
 });
 
 // CHECK LOCALSTRORAGE
 if (localStorage.getItem('city')) {
 	let cityId = localStorage.getItem('city');
-	updateCity(cityId).then((data) => {
-		updateUI(data);
+	forecast.updateCity(cityId).then((data) => {
+		forecast.updateUI(data);
 	});
 }
