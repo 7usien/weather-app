@@ -30,13 +30,24 @@ const updateUI = async (data) => {
 const updateCity = async (city) => {
 	const cityDet = await getCity(city);
 	const weather = await getWeather(cityDet.Key);
+	console.log(cityDet);
 	return { cityDet, weather };
 };
 cityForm.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const cityId = cityForm.city.value.trim().toLowerCase();
+	// add city to local stroage
+	localStorage.setItem('city', cityId);
 	cityForm.reset();
 	updateCity(cityId).then((data) => {
 		updateUI(data);
 	});
 });
+
+// CHECK LOCALSTRORAGE
+if (localStorage.getItem('city')) {
+	let cityId = localStorage.getItem('city');
+	updateCity(cityId).then((data) => {
+		updateUI(data);
+	});
+}
