@@ -15,7 +15,8 @@
 
 ### Perview time :smiley::
 
-_you can perview from here_ : [weather app](https//github.io/7usien/weather)
+_you can perview from here_ :
+[weather app](https://7usien.github.io/weather-app/)
 
 #### Upates & future plans :
 
